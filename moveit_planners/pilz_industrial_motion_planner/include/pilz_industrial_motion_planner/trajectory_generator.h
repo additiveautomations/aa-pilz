@@ -107,7 +107,7 @@ public:
    * @return motion plan sucgenerate(ceed/fail, detailed information in motion plan
    * response
    */
-  bool generate(const planning_scene::PlanningSceneConstPtr& scene
+  bool generate(const planning_scene::PlanningSceneConstPtr& scene,
                 const planning_interface::MotionPlanRequest& req, planning_interface::MotionPlanResponse& res,
                 double sampling_time = 0.1);
 

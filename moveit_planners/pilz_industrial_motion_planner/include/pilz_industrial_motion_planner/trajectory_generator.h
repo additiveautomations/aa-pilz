@@ -42,6 +42,7 @@
 #include <kdl/trajectory.hpp>
 #include <moveit/planning_interface/planning_interface.h>
 #include <moveit/robot_model/robot_model.h>
+#include <moveit/planning_scene/planning_scene.h>
 
 #include "pilz_industrial_motion_planner/joint_limits_extension.h"
 #include "pilz_industrial_motion_planner/limits_container.h"

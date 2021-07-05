@@ -36,6 +36,7 @@
 
 #include <eigen3/Eigen/Eigen>
 #include <kdl/rotational_interpolation_sa.hpp>
+#include <moveit/planning_scene/planning_scene.h>
 
 #include "pilz_industrial_motion_planner/trajectory_generator.h"
 #include "pilz_industrial_motion_planner/velocity_profile_atrap.h"

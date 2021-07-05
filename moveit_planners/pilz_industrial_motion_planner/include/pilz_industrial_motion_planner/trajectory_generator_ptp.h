@@ -34,6 +34,8 @@
 
 #pragma once
 
+#include <moveit/planning_scene/planning_scene.h>
+
 #include "eigen3/Eigen/Eigen"
 #include "pilz_industrial_motion_planner/trajectory_generation_exceptions.h"
 #include "pilz_industrial_motion_planner/trajectory_generator.h"

@@ -301,7 +301,7 @@ bool TrajectoryGenerator::generate(const planning_scene::PlanningSceneConstPtr& 
   MotionPlanInfo plan_info;
   try
   {
-    extractMotionPlanInfo(req, plan_info);
+    extractMotionPlanInfo(scene, req, plan_info);
   }
   catch (const MoveItErrorCodeException& ex)
   {

@@ -147,11 +147,13 @@ private:
    * @brief Extract needed information from a motion plan request in order to
    * simplify
    * further usages.
+   * @param scene: planning scene
    * @param req: motion plan request
    * @param info: information extracted from motion plan request which is
    * necessary for the planning
    */
-  virtual void extractMotionPlanInfo(const planning_interface::MotionPlanRequest& req, MotionPlanInfo& info) const = 0;
+  virtual void extractMotionPlanInfo(const planning_scene::PlanningSceneConstPtr& scene,
+                                     const planning_interface::MotionPlanRequest& req, MotionPlanInfo& info) const = 0;
 
   virtual void plan(const planning_scene::PlanningSceneConstPtr& scene,
                     const planning_interface::MotionPlanRequest& req, const MotionPlanInfo& plan_info,

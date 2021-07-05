@@ -267,7 +267,8 @@ TrajectoryGenerator::cartesianTrapVelocityProfile(const double& max_velocity_sca
   return vp_trans;
 }
 
-bool TrajectoryGenerator::generate(const planning_interface::MotionPlanRequest& req,
+bool TrajectoryGenerator::generate(const planning_scene::PlanningSceneConstPtr& scene,
+                                   const planning_interface::MotionPlanRequest& req,
                                    planning_interface::MotionPlanResponse& res, double sampling_time)
 {
   ROS_INFO_STREAM("Generating " << req.planner_id << " trajectory...");
@@ -313,7 +314,7 @@ bool TrajectoryGenerator::generate(const planning_interface::MotionPlanRequest& 
   trajectory_msgs::JointTrajectory joint_trajectory;
   try
   {
-    plan(req, plan_info, sampling_time, joint_trajectory);
+    plan(scene, req, plan_info, sampling_time, joint_trajectory);
   }
   catch (const MoveItErrorCodeException& ex)
   {

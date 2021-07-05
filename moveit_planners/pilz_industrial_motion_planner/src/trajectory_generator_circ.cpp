@@ -186,7 +186,8 @@ void TrajectoryGeneratorCIRC::extractMotionPlanInfo(const planning_interface::Mo
   info.circ_path_point.second = circ_path_point;
 }
 
-void TrajectoryGeneratorCIRC::plan(const planning_interface::MotionPlanRequest& req, const MotionPlanInfo& plan_info,
+void TrajectoryGeneratorCIRC::plan(const planning_scene::PlanningSceneConstPtr& scene,
+                                   const planning_interface::MotionPlanRequest& req, const MotionPlanInfo& plan_info,
                                    const double& sampling_time, trajectory_msgs::JointTrajectory& joint_trajectory)
 {
   std::unique_ptr<KDL::Path> cart_path(setPathCIRC(plan_info));

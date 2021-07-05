@@ -99,13 +99,15 @@ public:
 
   /**
    * @brief generate robot trajectory with given sampling time
+   * @param scene: planning scene
    * @param req: motion plan request
    * @param res: motion plan response
    * @param sampling_time: sampling time of the generate trajectory
-   * @return motion plan succeed/fail, detailed information in motion plan
-   * responce
+   * @return motion plan sucgenerate(ceed/fail, detailed information in motion plan
+   * response
    */
-  bool generate(const planning_interface::MotionPlanRequest& req, planning_interface::MotionPlanResponse& res,
+  bool generate(const planning_scene::PlanningSceneConstPtr& scene
+                const planning_interface::MotionPlanRequest& req, planning_interface::MotionPlanResponse& res,
                 double sampling_time = 0.1);
 
 protected:
@@ -150,7 +152,8 @@ private:
    */
   virtual void extractMotionPlanInfo(const planning_interface::MotionPlanRequest& req, MotionPlanInfo& info) const = 0;
 
-  virtual void plan(const planning_interface::MotionPlanRequest& req, const MotionPlanInfo& plan_info,
+  virtual void plan(const planning_scene::PlanningSceneConstPtr& scene,
+                    const planning_interface::MotionPlanRequest& req, const MotionPlanInfo& plan_info,
                     const double& sampling_time, trajectory_msgs::JointTrajectory& joint_trajectory) = 0;
 
 private:

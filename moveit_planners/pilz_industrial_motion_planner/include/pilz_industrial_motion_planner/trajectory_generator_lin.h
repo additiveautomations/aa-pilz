@@ -71,7 +71,8 @@ public:
                          const pilz_industrial_motion_planner::LimitsContainer& planner_limits);
 
 private:
-  void extractMotionPlanInfo(const planning_interface::MotionPlanRequest& req, MotionPlanInfo& info) const final;
+  void extractMotionPlanInfo(const planning_scene::PlanningSceneConstPtr& scene,
+                             const planning_interface::MotionPlanRequest& req, MotionPlanInfo& info) const final;
 
   void plan(const planning_scene::PlanningSceneConstPtr& scene,
             const planning_interface::MotionPlanRequest& req, const MotionPlanInfo& plan_info,

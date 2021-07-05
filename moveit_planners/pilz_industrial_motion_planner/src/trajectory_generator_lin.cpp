@@ -62,7 +62,8 @@ TrajectoryGeneratorLIN::TrajectoryGeneratorLIN(const moveit::core::RobotModelCon
   }
 }
 
-void TrajectoryGeneratorLIN::extractMotionPlanInfo(const planning_interface::MotionPlanRequest& req,
+void TrajectoryGeneratorLIN::extractMotionPlanInfo(const planning_scene::PlanningSceneConstPtr& scene,
+                                                   const planning_interface::MotionPlanRequest& req,
                                                    TrajectoryGenerator::MotionPlanInfo& info) const
 {
   ROS_DEBUG("Extract necessary information from motion plan request.");
@@ -144,8 +145,8 @@ void TrajectoryGeneratorLIN::extractMotionPlanInfo(const planning_interface::Mot
 
   // check goal pose ik before Cartesian motion plan starts
   std::map<std::string, double> ik_solution;
-  if (!computePoseIK(robot_model_, info.group_name, info.link_name, info.goal_pose, frame_id, info.start_joint_position,
-                     ik_solution))
+  if (!computePoseIK(scene, robot_model_, info.group_name, info.link_name, info.goal_pose, frame_id,
+                     info.start_joint_position, ik_solution))
   {
     std::ostringstream os;
     os << "Failed to compute inverse kinematics for link: " << info.link_name << " of goal pose";

@@ -37,6 +37,7 @@
 #include <algorithm>
 #include <math.h>
 #include <tf2_eigen/tf2_eigen.h>
+#include <moveit/planning_interface/planning_interface.h>
 
 bool pilz_industrial_motion_planner::TrajectoryBlenderTransitionWindow::blend(
     const pilz_industrial_motion_planner::TrajectoryBlendRequest& req,
@@ -87,7 +88,7 @@ bool pilz_industrial_motion_planner::TrajectoryBlenderTransitionWindow::blend(
   moveit_msgs::MoveItErrorCodes error_code;
 
   const moveit::core::RobotModelConstPtr& robot_model = req.first_trajectory->getFirstWayPointPtr()->getRobotModel();
-  const planning_scene::PlanningScene scene = planning_scene::PlanningSceneConst(robot_model);
+  const planning_scene::PlanningScene scene = planning_scene::PlanningScene(robot_model);
 
   if (!generateJointTrajectory(&scene, robot_model,
                                limits_.getJointLimitContainer(), blend_trajectory_cartesian, req.group_name,

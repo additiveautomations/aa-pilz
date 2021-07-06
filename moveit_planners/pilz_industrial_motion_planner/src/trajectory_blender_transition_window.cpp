@@ -88,7 +88,7 @@ bool pilz_industrial_motion_planner::TrajectoryBlenderTransitionWindow::blend(
   moveit_msgs::MoveItErrorCodes error_code;
 
   const moveit::core::RobotModelConstPtr& robot_model = req.first_trajectory->getFirstWayPointPtr()->getRobotModel();
-  const planning_scene::PlanningScene scene = planning_scene::PlanningScene(robot_model);
+  const planning_scene::PlanningSceneConstPtr& scene(planning_scene::PlanningScene(robot_model));
 
   if (!generateJointTrajectory(&scene, robot_model,
                                limits_.getJointLimitContainer(), blend_trajectory_cartesian, req.group_name,

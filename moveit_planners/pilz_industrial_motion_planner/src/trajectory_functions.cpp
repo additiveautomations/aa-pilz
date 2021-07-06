@@ -75,7 +75,8 @@ bool pilz_industrial_motion_planner::computePoseIK(const planning_scene::Plannin
 
   moveit::core::GroupStateValidityCallbackFn ik_constraint_function;
   ik_constraint_function =
-      boost::bind(&pilz_industrial_motion_planner::isStateColliding, check_self_collision, scene, _1, _2);
+      boost::bind(&pilz_industrial_motion_planner::isStateColliding, check_self_collision, scene, robot_model, _1, _2,
+                  _3);
 
   // call ik
   if (rstate.setFromIK(robot_model->getJointModelGroup(group_name), pose, link_name, timeout, ik_constraint_function))
@@ -559,6 +560,7 @@ bool pilz_industrial_motion_planner::intersectionFound(const Eigen::Vector3d& p_
 
 bool pilz_industrial_motion_planner::isStateColliding(const bool test_for_self_collision,
                                                       const planning_scene::PlanningSceneConstPtr& scene,
+                                                      const moveit::core::RobotModelConstPtr& robot_model,
                                                       robot_state::RobotState* rstate,
                                                       const robot_state::JointModelGroup* const group,
                                                       const double* const ik_solution)

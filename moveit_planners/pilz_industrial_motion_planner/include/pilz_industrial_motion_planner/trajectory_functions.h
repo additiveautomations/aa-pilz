@@ -212,14 +212,13 @@ bool intersectionFound(const Eigen::Vector3d& p_center, const Eigen::Vector3d& p
  * @param test_for_self_collision Flag to deactivate this check during IK.
  * @param scene: planning scene.
  * @param robot_model: robot kinematics model.
- * @param state Robot state instance used for .
  * @param group
  * @param ik_solution
  * @return
  */
 bool isStateColliding(const bool test_for_self_collision, const planning_scene::PlanningSceneConstPtr& scene,
-                      const moveit::core::RobotModelConstPtr& robot_model, robot_state::RobotState* state,
-                      const robot_state::JointModelGroup* const group, const double* const ik_solution);
+                      robot_state::RobotState* state, const robot_state::JointModelGroup* const group,
+                      const double* const ik_solution);
 }  // namespace pilz_industrial_motion_planner
 
 void normalizeQuaternion(geometry_msgs::Quaternion& quat);

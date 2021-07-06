@@ -576,10 +576,7 @@ bool pilz_industrial_motion_planner::isStateColliding(const bool test_for_self_c
   collision_req.group_name = group->getName();
   collision_detection::CollisionResult collision_res;
   planning_scene::PlanningScene(robot_model).checkSelfCollision(collision_req, collision_res, *rstate);
-  // Temporary solution. Should really use the MoveIt PlanningScene in here rather than building a new one so the ACM is
-  // passed through.
-  // return !collision_res.collision;
-  return true;
+  return !collision_res.collision;
 }
 
 void normalizeQuaternion(geometry_msgs::Quaternion& quat)

@@ -575,7 +575,7 @@ bool pilz_industrial_motion_planner::isStateColliding(const bool test_for_self_c
   collision_detection::CollisionRequest collision_req;
   collision_req.group_name = group->getName();
   collision_detection::CollisionResult collision_res;
-  planning_scene::PlanningScene(robot_model).checkSelfCollision(collision_req, collision_res, *rstate);
+  scene->checkSelfCollision(collision_req, collision_res, *rstate);
   return !collision_res.collision;
 }
 

@@ -560,7 +560,6 @@ bool pilz_industrial_motion_planner::intersectionFound(const Eigen::Vector3d& p_
 
 bool pilz_industrial_motion_planner::isStateColliding(const bool test_for_self_collision,
                                                       const planning_scene::PlanningSceneConstPtr& scene,
-                                                      const moveit::core::RobotModelConstPtr& robot_model,
                                                       robot_state::RobotState* rstate,
                                                       const robot_state::JointModelGroup* const group,
                                                       const double* const ik_solution)

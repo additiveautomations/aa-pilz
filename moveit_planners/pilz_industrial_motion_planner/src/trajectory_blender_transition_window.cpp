@@ -85,7 +85,10 @@ bool pilz_industrial_motion_planner::TrajectoryBlenderTransitionWindow::blend(
   }
   trajectory_msgs::JointTrajectory blend_joint_trajectory;
   moveit_msgs::MoveItErrorCodes error_code;
-  if (!generateJointTrajectory(req.first_trajectory->getFirstWayPointPtr()->getRobotModel(),
+
+  const planning_scene::PlanningSceneConstPtr& scene;
+
+  if (!generateJointTrajectory(scene, req.first_trajectory->getFirstWayPointPtr()->getRobotModel(),
                                limits_.getJointLimitContainer(), blend_trajectory_cartesian, req.group_name,
                                req.link_name, initial_joint_position, initial_joint_velocity, blend_joint_trajectory,
                                error_code, true))

@@ -106,33 +106,12 @@ list(APPEND ${PROJECT_NAME}_INCLUDE_DIRS ${VERSION_FILE_PATH})
 file(MAKE_DIRECTORY "${VERSION_FILE_PATH}/moveit")
 
 set(THIS_PACKAGE_INCLUDE_DIRS
-    background_processing/include
-    exceptions/include
-    backtrace/include
     collision_detection/include
     collision_detection_fcl/include
     ${BULLET_INC}
-    constraint_samplers/include
-    controller_manager/include
-    distance_field/include
     collision_distance_field/include
-    dynamics_solver/include
-    kinematics_base/include
-    kinematics_metrics/include
-    robot_model/include
-    transforms/include
     robot_state/include
-    robot_trajectory/include
-    kinematic_constraints/include
-    macros/include
-    planning_interface/include
-    planning_request_adapter/include
     planning_scene/include
-    profiler/include
-    python/tools/include
-    sensor_manager/include
-    trajectory_processing/include
-    utils/include
 )
 
 catkin_package(

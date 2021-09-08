@@ -112,6 +112,7 @@ set(THIS_PACKAGE_INCLUDE_DIRS
     collision_distance_field/include
     robot_state/include
     planning_scene/include
+    python/tools/include
 )
 
 catkin_package(
@@ -194,15 +195,18 @@ string(REGEX REPLACE "^[0-9]+\\.[0-9]+\\.([0-9]+).*" "\\1" MOVEIT_VERSION_PATCH 
 set(MOVEIT_VERSION_EXTRA "Alpha")
 set(MOVEIT_VERSION "${MOVEIT_VERSION_MAJOR}.${MOVEIT_VERSION_MINOR}.${MOVEIT_VERSION_PATCH}-${MOVEIT_VERSION_EXTRA}")
 message(STATUS " *** Building MoveIt ${MOVEIT_VERSION} ***")
+configure_file("version/version.h.in" "${VERSION_FILE_PATH}/moveit/version.h")
 #catkin_lint: ignore_once external_file
 install(FILES "${VERSION_FILE_PATH}/moveit/version.h" DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}/moveit)
 
+add_subdirectory(version)
 add_subdirectory(robot_state)
 add_subdirectory(collision_detection)
 add_subdirectory(collision_detection_fcl)
 add_subdirectory(planning_scene)
 add_subdirectory(collision_distance_field)
 
+add_subdirectory(python)
 set(pymoveit_libs
   moveit_collision_detection
   moveit_kinematic_constraints

@@ -194,38 +194,15 @@ string(REGEX REPLACE "^[0-9]+\\.[0-9]+\\.([0-9]+).*" "\\1" MOVEIT_VERSION_PATCH 
 set(MOVEIT_VERSION_EXTRA "Alpha")
 set(MOVEIT_VERSION "${MOVEIT_VERSION_MAJOR}.${MOVEIT_VERSION_MINOR}.${MOVEIT_VERSION_PATCH}-${MOVEIT_VERSION_EXTRA}")
 message(STATUS " *** Building MoveIt ${MOVEIT_VERSION} ***")
-configure_file("version/version.h.in" "${VERSION_FILE_PATH}/moveit/version.h")
 #catkin_lint: ignore_once external_file
 install(FILES "${VERSION_FILE_PATH}/moveit/version.h" DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}/moveit)
 
-add_subdirectory(version)
-add_subdirectory(macros)
-add_subdirectory(backtrace)
-add_subdirectory(exceptions)
-add_subdirectory(profiler)
-add_subdirectory(utils)
-add_subdirectory(background_processing)
-add_subdirectory(kinematics_base)
-add_subdirectory(controller_manager)
-add_subdirectory(sensor_manager)
-add_subdirectory(robot_model)
-add_subdirectory(transforms)
 add_subdirectory(robot_state)
-add_subdirectory(robot_trajectory)
 add_subdirectory(collision_detection)
 add_subdirectory(collision_detection_fcl)
-add_subdirectory(kinematic_constraints)
 add_subdirectory(planning_scene)
-add_subdirectory(constraint_samplers)
-add_subdirectory(planning_interface)
-add_subdirectory(planning_request_adapter)
-add_subdirectory(trajectory_processing)
-add_subdirectory(distance_field)
 add_subdirectory(collision_distance_field)
-add_subdirectory(kinematics_metrics)
-add_subdirectory(dynamics_solver)
 
-add_subdirectory(python)
 set(pymoveit_libs
   moveit_collision_detection
   moveit_kinematic_constraints

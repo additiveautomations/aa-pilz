@@ -100,16 +100,14 @@ public:
 
   /**
    * @brief generate robot trajectory with given sampling time
-   * @param scene: planning scene
    * @param req: motion plan request
    * @param res: motion plan response
    * @param sampling_time: sampling time of the generate trajectory
-   * @return motion plan sucgenerate(ceed/fail, detailed information in motion plan
+   * @return motion plan succeed/fail, detailed information in motion plan
    * response
    */
-  bool generate(const planning_scene::PlanningSceneConstPtr& scene,
-                const planning_interface::MotionPlanRequest& req, planning_interface::MotionPlanResponse& res,
-                double sampling_time = 0.1);
+  bool generate(const planning_scene::PlanningSceneConstPtr& scene, const planning_interface::MotionPlanRequest& req,
+                planning_interface::MotionPlanResponse& res, double sampling_time = 0.1);
 
 protected:
   /**
@@ -206,7 +204,7 @@ private:
   /**
    * @brief set MotionPlanResponse from joint trajectory
    */
-  void setSuccessResponse(const std::string& group_name, const moveit_msgs::RobotState& start_state,
+  void setSuccessResponse(const moveit::core::RobotState& start_rs, const std::string& group_name,
                           const trajectory_msgs::JointTrajectory& joint_trajectory, const ros::Time& planning_start,
                           planning_interface::MotionPlanResponse& res) const;
 
@@ -235,10 +233,6 @@ private:
                                 const std::string& group_name) const;
 
   void checkCartesianGoalConstraint(const moveit_msgs::Constraints& constraint, const std::string& group_name) const;
-
-  void convertToRobotTrajectory(const trajectory_msgs::JointTrajectory& joint_trajectory,
-                                const moveit_msgs::RobotState& start_state,
-                                robot_trajectory::RobotTrajectory& robot_trajectory) const;
 
 private:
   /**

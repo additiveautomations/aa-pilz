@@ -41,6 +41,10 @@
 
 #include <tf2_eigen/tf2_eigen.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <tf/LinearMath/Vector3.h>
+#include <tf/LinearMath/Transform.h>
+#include <tf/transform_datatypes.h>
+#include <tf/transform_listener.h>
 
 namespace pilz_industrial_motion_planner
 {
@@ -239,9 +243,20 @@ void TrajectoryGeneratorPTP::extractMotionPlanInfo(const planning_scene::Plannin
   {
     geometry_msgs::Point p =
         req.goal_constraints.at(0).position_constraints.at(0).constraint_region.primitive_poses.at(0).position;
-    p.x -= req.goal_constraints.at(0).position_constraints.at(0).target_point_offset.x;
-    p.y -= req.goal_constraints.at(0).position_constraints.at(0).target_point_offset.y;
-    p.z -= req.goal_constraints.at(0).position_constraints.at(0).target_point_offset.z;
+    tf::TransformListener listener;
+    tf::Vector3 offset_in_world;
+    tf::vector3MsgToTF(req.goal_constraints.at(0).position_constraints.at(0).target_point_offset, offset_in_world);
+    tf::StampedTransform world_to_ee;
+    try {
+      listener.lookupTransform("/axia80_mate", "/world", ros::Time(0), world_to_ee);
+    }
+    catch (tf::TransformException ex){
+      ROS_ERROR("%s",ex.what());
+    }
+    tf::Vector3 offset_in_ee = offset_in_world.rotate(world_to_ee.getRotation().getAxis(), world_to_ee.getRotation().getAngle());
+    p.x -= offset_in_ee.x();
+    p.y -= offset_in_ee.y();
+    p.z -= offset_in_ee.z();
 
     geometry_msgs::Pose pose;
     pose.position = p;

@@ -246,10 +246,10 @@ void TrajectoryGeneratorPTP::extractMotionPlanInfo(const planning_scene::Plannin
     Eigen::Vector3d offset_in_world(req.goal_constraints.at(0).position_constraints.at(0).target_point_offset.x,
                                     req.goal_constraints.at(0).position_constraints.at(0).target_point_offset.y,
                                     req.goal_constraints.at(0).position_constraints.at(0).target_point_offset.z);
-    Eigen::Quaterniond ee_orientation(req.goal_constraints.at(0).orientation_constraints.at(0).orientation.x,
+    Eigen::Quaterniond ee_orientation(req.goal_constraints.at(0).orientation_constraints.at(0).orientation.w,
+                                      req.goal_constraints.at(0).orientation_constraints.at(0).orientation.x,
                                       req.goal_constraints.at(0).orientation_constraints.at(0).orientation.y,
-                                      req.goal_constraints.at(0).orientation_constraints.at(0).orientation.z,
-                                      req.goal_constraints.at(0).orientation_constraints.at(0).orientation.w);
+                                      req.goal_constraints.at(0).orientation_constraints.at(0).orientation.z);
     ROS_INFO("Goal orientation: [x=%lf, y=%lf, z=%lf, w=%lf]", ee_orientation.x(), ee_orientation.y(), ee_orientation.z(), ee_orientation.w());
     Eigen::Vector3d offset_in_ee = ee_orientation * offset_in_world;
     p.x -= offset_in_ee.x();

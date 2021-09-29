@@ -257,7 +257,7 @@ void TrajectoryGeneratorPTP::extractMotionPlanInfo(const planning_scene::Plannin
     catch (tf::TransformException ex){
       ROS_ERROR("%s",ex.what());
     }
-    ROS_INFO("Axia 80 to World to quaternion: [x=%lf, y=%lf, z=%lf, w=%lf]",
+    ROS_INFO("World to Axia 80 to quaternion: [x=%lf, y=%lf, z=%lf, w=%lf]",
              world_to_ee.getRotation().x(),
              world_to_ee.getRotation().y(),
              world_to_ee.getRotation().z(),

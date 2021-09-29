@@ -243,27 +243,15 @@ void TrajectoryGeneratorPTP::extractMotionPlanInfo(const planning_scene::Plannin
   {
     geometry_msgs::Point p =
         req.goal_constraints.at(0).position_constraints.at(0).constraint_region.primitive_poses.at(0).position;
-    tf::Vector3 offset_in_world;
-    tf::vector3MsgToTF(req.goal_constraints.at(0).position_constraints.at(0).target_point_offset, offset_in_world);
-    tf::StampedTransform world_to_ee;
-    tf::TransformListener listener;
-    for (int i = 0; i < 1000; i++) {
-      ros::spinOnce();
-      ros::Duration(0.001).sleep();
-    }
-    try {
-      listener.lookupTransform("/axia80_mate", "/world", ros::Time(0), world_to_ee);
-    }
-    catch (tf::TransformException ex){
-      ROS_ERROR("%s",ex.what());
-    }
-    ROS_INFO("World to Axia 80 to quaternion: [x=%lf, y=%lf, z=%lf, w=%lf]",
-             world_to_ee.getRotation().x(),
-             world_to_ee.getRotation().y(),
-             world_to_ee.getRotation().z(),
-             world_to_ee.getRotation().w()
-    );
-    tf::Vector3 offset_in_ee = offset_in_world.rotate(world_to_ee.getRotation().getAxis(), world_to_ee.getRotation().getAngle());
+    Eigen::Vector3d offset_in_world(req.goal_constraints.at(0).position_constraints.at(0).target_point_offset.x,
+                                    req.goal_constraints.at(0).position_constraints.at(0).target_point_offset.y,
+                                    req.goal_constraints.at(0).position_constraints.at(0).target_point_offset.z);
+    Eigen::Quaterniond ee_orientation(req.goal_constraints.at(0).orientation_constraints.at(0).orientation.x,
+                                      req.goal_constraints.at(0).orientation_constraints.at(0).orientation.y,
+                                      req.goal_constraints.at(0).orientation_constraints.at(0).orientation.z,
+                                      req.goal_constraints.at(0).orientation_constraints.at(0).orientation.w);
+    ROS_INFO("Goal orientation: [x=%lf, y=%lf, z=%lf, w=%lf]", ee_orientation.x(), ee_orientation.y(), ee_orientation.z(), ee_orientation.w());
+    Eigen::Vector3d offset_in_ee = ee_orientation * offset_in_world;
     p.x -= offset_in_ee.x();
     p.y -= offset_in_ee.y();
     p.z -= offset_in_ee.z();

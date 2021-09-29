@@ -243,18 +243,14 @@ void TrajectoryGeneratorPTP::extractMotionPlanInfo(const planning_scene::Plannin
   {
     geometry_msgs::Point p =
         req.goal_constraints.at(0).position_constraints.at(0).constraint_region.primitive_poses.at(0).position;
-    Eigen::Vector3d offset_in_world(req.goal_constraints.at(0).position_constraints.at(0).target_point_offset.x,
-                                    req.goal_constraints.at(0).position_constraints.at(0).target_point_offset.y,
-                                    req.goal_constraints.at(0).position_constraints.at(0).target_point_offset.z);
-    Eigen::Quaterniond ee_orientation(req.goal_constraints.at(0).orientation_constraints.at(0).orientation.w,
-                                      req.goal_constraints.at(0).orientation_constraints.at(0).orientation.x,
-                                      req.goal_constraints.at(0).orientation_constraints.at(0).orientation.y,
-                                      req.goal_constraints.at(0).orientation_constraints.at(0).orientation.z);
-    ROS_INFO("Goal orientation: [x=%lf, y=%lf, z=%lf, w=%lf]", ee_orientation.x(), ee_orientation.y(), ee_orientation.z(), ee_orientation.w());
-    Eigen::Vector3d offset_in_ee = ee_orientation * offset_in_world;
-    p.x -= offset_in_ee.x();
-    p.y -= offset_in_ee.y();
-    p.z -= offset_in_ee.z();
+    Eigen::Vector3d offset_in_world;
+    tf2::fromMsg(req.goal_constraints.at(0).position_constraints.at(0).target_point_offset, offset_in_world);
+    Eigen::Quaterniond goal_orientation;
+    tf2::fromMsg(req.goal_constraints.at(0).orientation_constraints.at(0).orientation, goal_orientation);
+    Eigen::Vector3d offset_in_goal = goal_orientation * offset_in_world;
+    p.x -= offset_in_goal[0];
+    p.y -= offset_in_goal[1];
+    p.z -= offset_in_goal[2];
 
     geometry_msgs::Pose pose;
     pose.position = p;

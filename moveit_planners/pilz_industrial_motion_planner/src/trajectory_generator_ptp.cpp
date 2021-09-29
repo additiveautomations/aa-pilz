@@ -243,16 +243,26 @@ void TrajectoryGeneratorPTP::extractMotionPlanInfo(const planning_scene::Plannin
   {
     geometry_msgs::Point p =
         req.goal_constraints.at(0).position_constraints.at(0).constraint_region.primitive_poses.at(0).position;
-    tf::TransformListener listener;
     tf::Vector3 offset_in_world;
     tf::vector3MsgToTF(req.goal_constraints.at(0).position_constraints.at(0).target_point_offset, offset_in_world);
     tf::StampedTransform world_to_ee;
+    tf::TransformListener listener;
+    for (int i = 0; i < 1000; i++) {
+      ros::spinOnce();
+      ros::Duration(0.001).sleep();
+    }
     try {
       listener.lookupTransform("/axia80_mate", "/world", ros::Time(0), world_to_ee);
     }
     catch (tf::TransformException ex){
       ROS_ERROR("%s",ex.what());
     }
+    ROS_INFO("Axia 80 to World to quaternion: [x=%lf, y=%lf, z=%lf, w=%lf]",
+             world_to_ee.getRotation().x(),
+             world_to_ee.getRotation().y(),
+             world_to_ee.getRotation().z(),
+             world_to_ee.getRotation().w()
+    );
     tf::Vector3 offset_in_ee = offset_in_world.rotate(world_to_ee.getRotation().getAxis(), world_to_ee.getRotation().getAngle());
     p.x -= offset_in_ee.x();
     p.y -= offset_in_ee.y();

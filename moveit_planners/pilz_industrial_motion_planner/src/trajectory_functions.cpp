@@ -586,17 +586,25 @@ void normalizeQuaternion(geometry_msgs::Quaternion& quat)
   quat = tf2::toMsg(q.normalize());
 }
 
-Eigen::Isometry3d getConstraintPose(const moveit_msgs::Constraints& constraint, const geometry_msgs::Vector3& offset,
-                                    const geometry_msgs::Quaternion& orientation)
+Eigen::Isometry3d getConstraintPose(const geometry_msgs::Point& position, const geometry_msgs::Quaternion& orientation,
+                                    const geometry_msgs::Vector3& offset)
 {
-  geometry_msgs::Pose pose;
-  pose.position = constraint.position_constraints.front().constraint_region.primitive_poses.front().position;
-  pose.orientation = orientation;
-  normalizeQuaternion(pose.orientation);
-  Eigen::Isometry3d pose_eigen;
-  tf2::fromMsg(pose, pose_eigen);
-  Eigen::Vector3d eigen_offset;
-  tf2::fromMsg(offset, eigen_offset);
-  pose_eigen.translation() -= pose_eigen.rotation() * eigen_offset;
-  return pose_eigen;
+  Eigen::Quaterniond quat;
+  tf2::fromMsg(orientation, quat);
+  quat.normalize();
+  Eigen::Vector3d v;
+  tf2::fromMsg(position, v);
+
+  Eigen::Isometry3d pose = Eigen::Translation3d(v) * quat;
+
+  tf2::fromMsg(offset, v);
+  pose.translation() -= quat * v;
+  return pose;
+}
+
+Eigen::Isometry3d getConstraintPose(const moveit_msgs::Constraints& goal)
+{
+  return getConstraintPose(goal.position_constraints.front().constraint_region.primitive_poses.front().position,
+                           goal.orientation_constraints.front().orientation,
+                           goal.position_constraints.front().target_point_offset);
 }

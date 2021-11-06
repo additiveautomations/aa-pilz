@@ -141,10 +141,7 @@ void TrajectoryGeneratorCIRC::extractMotionPlanInfo(const planning_scene::Planni
     {
       frame_id = req.goal_constraints.front().position_constraints.front().header.frame_id;
     }
-    moveit_msgs::Constraints goal = req.goal_constraints.front();
-    geometry_msgs::Vector3 goal_offset = goal.position_constraints.front().target_point_offset;
-    geometry_msgs::Quaternion goal_orientation = goal.orientation_constraints.front().orientation;
-    info.goal_pose = getConstraintPose(goal, goal_offset, goal_orientation);
+    info.goal_pose = getConstraintPose(req.goal_constraints.front());
   }
 
   assert(req.start_state.joint_state.name.size() == req.start_state.joint_state.position.size());
@@ -179,11 +176,12 @@ void TrajectoryGeneratorCIRC::extractMotionPlanInfo(const planning_scene::Planni
   info.circ_path_point.first = req.path_constraints.name;
   if (!req.goal_constraints.front().position_constraints.empty())
   {
-    moveit_msgs::Constraints goal = req.goal_constraints.front();
-
-    geometry_msgs::Vector3 goal_offset = goal.position_constraints.front().target_point_offset;
-    geometry_msgs::Quaternion goal_orientation = goal.orientation_constraints.front().orientation;
-    info.circ_path_point.second = getConstraintPose(req.path_constraints, goal_offset, goal_orientation).translation();
+    const moveit_msgs::Constraints& goal = req.goal_constraints.front();
+    info.circ_path_point.second =
+        getConstraintPose(
+            req.path_constraints.position_constraints.front().constraint_region.primitive_poses.front().position,
+            goal.orientation_constraints.front().orientation, goal.position_constraints.front().target_point_offset)
+            .translation();
   }
   else
   {

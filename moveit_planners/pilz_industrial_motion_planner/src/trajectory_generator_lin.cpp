@@ -116,10 +116,7 @@ void TrajectoryGeneratorLIN::extractMotionPlanInfo(const planning_scene::Plannin
     {
       frame_id = req.goal_constraints.front().position_constraints.front().header.frame_id;
     }
-    moveit_msgs::Constraints goal = req.goal_constraints.front();
-    geometry_msgs::Vector3 goal_offset = goal.position_constraints.front().target_point_offset;
-    geometry_msgs::Quaternion goal_orientation = goal.orientation_constraints.front().orientation;
-    info.goal_pose = getConstraintPose(goal, goal_offset, goal_orientation);
+    info.goal_pose = getConstraintPose(req.goal_constraints.front());
   }
 
   assert(req.start_state.joint_state.name.size() == req.start_state.joint_state.position.size());

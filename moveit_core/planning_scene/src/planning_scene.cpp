@@ -2211,6 +2211,7 @@ bool PlanningScene::isPathValid(const robot_trajectory::RobotTrajectory& traject
                                 const std::vector<moveit_msgs::Constraints>& goal_constraints, const std::string& group,
                                 bool verbose, std::vector<std::size_t>* invalid_index) const
 {
+  ROS_WARN("CHECKING IF PATH IS VALID");
   bool result = true;
   if (invalid_index)
     invalid_index->clear();
@@ -2222,8 +2223,10 @@ bool PlanningScene::isPathValid(const robot_trajectory::RobotTrajectory& traject
     const moveit::core::RobotState& st = trajectory.getWayPoint(i);
 
     bool this_state_valid = true;
+    ROS_WARN("CHECKING IF STATE %d HAS COLLISIONS", i);
     if (isStateColliding(st, group, verbose))
       this_state_valid = false;
+    ROS_WARN("CHECKED IF STATE %d HAS COLLISIONS", i);
     if (!isStateFeasible(st, verbose))
       this_state_valid = false;
     if (!ks_p.empty() && !ks_p.decide(st, verbose).satisfied)
@@ -2260,6 +2263,7 @@ bool PlanningScene::isPathValid(const robot_trajectory::RobotTrajectory& traject
       }
     }
   }
+  ROS_WARN("CHECKED IF PATH IS VALID");
   return result;
 }
 

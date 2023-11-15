@@ -229,13 +229,16 @@ CommandListManager::solveSequenceItems(const planning_scene::PlanningSceneConstP
   MotionResponseCont motion_plan_responses;
   size_t curr_req_index{ 0 };
   const size_t num_req{ req_list.items.size() };
+  int i = 0;
   for (const auto& seq_item : req_list.items)
   {
     planning_interface::MotionPlanRequest req{ seq_item.req };
     setStartState(motion_plan_responses, req.group_name, req.start_state);
 
     planning_interface::MotionPlanResponse res;
+    ROS_WARN("PLANNING MOTION FOR SEGMENT %d", i);
     planning_pipeline->generatePlan(planning_scene, req, res);
+    ROS_WARN("PLANNED MOTION FOR SEGMENT %d", i);
     if (res.error_code_.val != res.error_code_.SUCCESS)
     {
       std::ostringstream os;
@@ -244,6 +247,7 @@ CommandListManager::solveSequenceItems(const planning_scene::PlanningSceneConstP
     }
     motion_plan_responses.emplace_back(res);
     ROS_DEBUG_STREAM("Solved [" << ++curr_req_index << "/" << num_req << "]");
+    i++;
   }
   return motion_plan_responses;
 }

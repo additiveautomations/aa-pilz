@@ -190,6 +190,7 @@ int PR2ArmIKSolver::cartToJntSearch(const KDL::JntArray& q_in, const KDL::Frame&
   if (loop_time >= timeout)
   {
     ROS_DEBUG_NAMED("pr2_arm_kinematics_plugin", "IK Timed out in %f seconds", timeout);
+    std::cout << "Error 2 has occurred" << std::endl;
     return TIMED_OUT;
   }
   else

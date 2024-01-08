@@ -107,6 +107,7 @@ void MoveGroupExecuteTrajectoryAction::executePath(const moveit_msgs::ExecuteTra
     }
     else if (status == moveit_controller_manager::ExecutionStatus::TIMED_OUT)
     {
+      std::cout << "Error 11 has occurred" << std::endl;
       action_res.error_code.val = moveit_msgs::MoveItErrorCodes::TIMED_OUT;
     }
     else

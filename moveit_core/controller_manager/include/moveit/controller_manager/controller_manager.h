@@ -84,6 +84,7 @@ struct ExecutionStatus
       case PREEMPTED:
         return "PREEMPTED";
       case TIMED_OUT:
+        std::cout << "Error 3 has occurred" << std::endl;
         return "TIMED_OUT";
       case ABORTED:
         return "ABORTED";

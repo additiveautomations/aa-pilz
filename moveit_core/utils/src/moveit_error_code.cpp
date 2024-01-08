@@ -59,6 +59,7 @@ const char* MoveItErrorCode::toString(const moveit_msgs::MoveItErrorCodes& error
     case moveit_msgs::MoveItErrorCodes::UNABLE_TO_AQUIRE_SENSOR_DATA:
       return "UNABLE_TO_AQUIRE_SENSOR_DATA";
     case moveit_msgs::MoveItErrorCodes::TIMED_OUT:
+      std::cout << "Error 4 has occurred" << std::endl;
       return "TIMED_OUT";
     case moveit_msgs::MoveItErrorCodes::PREEMPTED:
       return "PREEMPTED";

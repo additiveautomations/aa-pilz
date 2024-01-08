@@ -1270,6 +1270,7 @@ bool TrajectoryExecutionManager::executePart(std::size_t part_index)
               stopExecutionInternal();  // this is really tricky. we can't call stopExecution() here, so we call the
                                         // internal function only
             }
+            std::cout << "Error 12 has occurred" << std::endl;
             last_execution_status_ = moveit_controller_manager::ExecutionStatus::TIMED_OUT;
             result = false;
             break;

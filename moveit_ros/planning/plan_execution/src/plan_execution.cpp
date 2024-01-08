@@ -452,7 +452,10 @@ moveit_msgs::MoveItErrorCodes plan_execution::PlanExecution::executeAndMonitor(E
         result.val = moveit_msgs::MoveItErrorCodes::SUCCESS;
       else if (trajectory_execution_manager_->getLastExecutionStatus() ==
                moveit_controller_manager::ExecutionStatus::TIMED_OUT)
+      {
+        std::cout << "Error 1 has occurred" << std::endl;
         result.val = moveit_msgs::MoveItErrorCodes::TIMED_OUT;
+      }
       else
         result.val = moveit_msgs::MoveItErrorCodes::CONTROL_FAILED;
     }

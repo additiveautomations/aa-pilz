@@ -250,7 +250,10 @@ bool ompl_interface::PoseModelStateSpace::PoseComponent::computeStateIK(StateTyp
     if (err_code.val != moveit_msgs::MoveItErrorCodes::TIMED_OUT ||
         !kinematics_solver_->searchPositionIK(pose, seed_values, kinematics_solver_->getDefaultTimeout() * 2.0,
                                               solution, err_code))
+    {
       return false;
+      std::cout << "Error 8 has occurred" << std::endl;
+    }
   }
 
   for (std::size_t i = 0; i < bijection_.size(); ++i)

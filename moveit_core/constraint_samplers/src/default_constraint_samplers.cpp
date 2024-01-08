@@ -674,7 +674,10 @@ bool IKConstraintSampler::callIK(const geometry_msgs::Pose& ik_query,
     if (error.val != moveit_msgs::MoveItErrorCodes::NO_IK_SOLUTION &&
         error.val != moveit_msgs::MoveItErrorCodes::INVALID_ROBOT_STATE &&
         error.val != moveit_msgs::MoveItErrorCodes::TIMED_OUT)
+    {
+      std::cout << "Error 1 has occurred" << std::endl;
       ROS_ERROR_NAMED("constraint_samplers", "IK solver failed with error %d", error.val);
+    }
     else if (verbose_)
       ROS_INFO_NAMED("constraint_samplers", "IK failed");
   }

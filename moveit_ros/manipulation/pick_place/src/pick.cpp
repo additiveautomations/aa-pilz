@@ -204,7 +204,10 @@ bool PickPlan::plan(const planning_scene::PlanningSceneConstPtr& planning_scene,
   else
   {
     if (last_plan_time_ > timeout)
+    {
+      std::cout << "Error 9 has occurred" << std::endl;
       error_code_.val = moveit_msgs::MoveItErrorCodes::TIMED_OUT;
+    }
     else
     {
       error_code_.val = moveit_msgs::MoveItErrorCodes::PLANNING_FAILED;

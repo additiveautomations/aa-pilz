@@ -93,7 +93,10 @@ bool MoveGroupExecuteService::executeTrajectoryService(moveit_msgs::ExecuteKnown
       else if (es == moveit_controller_manager::ExecutionStatus::PREEMPTED)
         res.error_code.val = moveit_msgs::MoveItErrorCodes::PREEMPTED;
       else if (es == moveit_controller_manager::ExecutionStatus::TIMED_OUT)
+      {
+        std::cout << "Error 11 has occurred" << std::endl;
         res.error_code.val = moveit_msgs::MoveItErrorCodes::TIMED_OUT;
+      }
       else
         res.error_code.val = moveit_msgs::MoveItErrorCodes::CONTROL_FAILED;
       ROS_INFO_STREAM_NAMED(getName(), "Execution completed: " << es.asString());

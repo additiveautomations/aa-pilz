@@ -335,14 +335,14 @@ bool PlacePlan::plan(const planning_scene::PlanningSceneConstPtr& planning_scene
     if (goal.place_eef)
       p->goal_pose_ = pl.place_pose;
     else
-        // The goals are specified for the attached body
-        // but we want to transform them into goals for the end-effector instead
-        if (!transformToEndEffectorGoal(pl.place_pose, attached_body, p->goal_pose_))
-    {
-      p->goal_pose_ = pl.place_pose;
-      ROS_ERROR_NAMED("manipulation", "Unable to transform the desired pose of the object to the pose of the "
-                                      "end-effector");
-    }
+      // The goals are specified for the attached body
+      // but we want to transform them into goals for the end-effector instead
+      if (!transformToEndEffectorGoal(pl.place_pose, attached_body, p->goal_pose_))
+      {
+        p->goal_pose_ = pl.place_pose;
+        ROS_ERROR_NAMED("manipulation", "Unable to transform the desired pose of the object to the pose of the "
+                                        "end-effector");
+      }
 
     p->approach_ = pl.pre_place_approach;
     p->retreat_ = pl.post_place_retreat;
@@ -366,7 +366,10 @@ bool PlacePlan::plan(const planning_scene::PlanningSceneConstPtr& planning_scene
   else
   {
     if (last_plan_time_ > timeout)
+    {
+      std::cout << "Error 10 has occurred" << std::endl;
       error_code_.val = moveit_msgs::MoveItErrorCodes::TIMED_OUT;
+    }
     else
     {
       error_code_.val = moveit_msgs::MoveItErrorCodes::PLANNING_FAILED;

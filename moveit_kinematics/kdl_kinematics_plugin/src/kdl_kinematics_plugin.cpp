@@ -414,6 +414,7 @@ bool KDLKinematicsPlugin::searchPositionIK(const geometry_msgs::Pose& ik_pose, c
 
   ROS_DEBUG_STREAM_NAMED("kdl", "IK timed out after " << (ros::WallTime::now() - start_time).toSec() << " > " << timeout
                                                       << "s and " << attempt << " attempts");
+  std::cout << "Error 5 has occurred" << std::endl;
   error_code.val = error_code.TIMED_OUT;
   return false;
 }

@@ -846,6 +846,7 @@ int32_t ompl_interface::ModelBasedPlanningContext::errorCode(const ompl::base::P
       break;
     case ompl::base::PlannerStatus::TIMEOUT:
       ROS_WARN_NAMED(LOGNAME, "Timed out");
+      std::cout << "Error 7 has occurred" << std::endl;
       result = moveit_msgs::MoveItErrorCodes::TIMED_OUT;
       break;
     case ompl::base::PlannerStatus::APPROXIMATE_SOLUTION:

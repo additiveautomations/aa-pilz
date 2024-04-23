@@ -460,9 +460,7 @@ public:
 
   void setStartStateToCurrentState()
   {
-    moveit::core::RobotStatePtr current_state;
-    getCurrentState(current_state);
-    setStartState(*current_state);
+    considered_start_state_ = std::nullopt;
   }
 
   moveit::core::RobotStatePtr getStartState()
@@ -953,9 +951,15 @@ public:
     moveit_msgs::GetCartesianPath::Response res;
 
     if (considered_start_state_)
+    {
       req.start_state = *considered_start_state_;
+    }
     else
+    {
+      // If there is no considered start state, this is an empty diff
+      // i.e. use the current state
       req.start_state.is_diff = true;
+    }
 
     req.group_name = opt_.group_name_;
     req.header.frame_id = getPoseReferenceFrame();
@@ -1102,10 +1106,15 @@ public:
     request.workspace_parameters = workspace_parameters_;
 
     if (considered_start_state_)
+    {
       request.start_state = *considered_start_state_;
+    }
     else
+    {
+      // If there is no start state, this is an empty diff
+      // i.e. use the current state
       request.start_state.is_diff = true;
-
+    }
     if (active_target_ == JOINT)
     {
       request.goal_constraints.resize(1);

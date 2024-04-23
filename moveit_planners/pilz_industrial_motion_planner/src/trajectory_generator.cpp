@@ -349,7 +349,6 @@ bool TrajectoryGenerator::generate(const planning_scene::PlanningSceneConstPtr& 
 TrajectoryGenerator::MotionPlanInfo::MotionPlanInfo(const planning_scene::PlanningSceneConstPtr& scene,
                                                     const planning_interface::MotionPlanRequest& req)
 {
-  ROS_WARN_STREAM("ROBOT STATE DIFF (Pilz):\n" << req.start_state);
   auto ps = scene->diff();
   auto& start_state = ps->getCurrentStateNonConst();
   const auto& rs = req.start_state;

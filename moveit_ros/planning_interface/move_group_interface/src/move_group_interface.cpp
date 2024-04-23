@@ -454,6 +454,7 @@ public:
   
   void setStartState(const moveit::core::RobotState& start_state)
   {
+    considered_start_state_ = moveit_msgs::RobotState();
     moveit::core::robotStateToRobotStateMsg(start_state, *considered_start_state_, true);
   }
 
